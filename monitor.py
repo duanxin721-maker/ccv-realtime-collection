@@ -558,6 +558,8 @@ class Monitor:
         duration_minutes = int(self.cfg.get("monitor_duration_minutes", 0) or 0)
         duration_secs = duration_minutes * 60 if duration_minutes > 0 else 0
         session_started = time.monotonic()
+        seen_live = False
+        offline_streak = 0
         while not self._stopping:
             if stop_flag.exists() or task_stop_flag.exists():
                 logging.info("检测到 stop.flag，正在优雅停止...")
@@ -579,6 +581,18 @@ class Monitor:
                 self.tick()
             except Exception as exc:  # noqa: BLE001
                 logging.exception("本轮采集异常: %s", exc)
+            # 开播守望: 开播自动采集（tick 已覆盖），连续 2 轮无人观看后自动停止
+            if self.cfg.get("auto_stop_on_offline"):
+                if self.last_live_count > 0:
+                    seen_live = True
+                    offline_streak = 0
+                elif seen_live:
+                    offline_streak += 1
+                    if offline_streak >= 2:
+                        logging.info("检测到下播，守望任务自动结束")
+                        self._normal_exit = True
+                        self.stop(status="completed")
+                        break
             if once:
                 self._normal_exit = True
                 self._session_status = "completed"
