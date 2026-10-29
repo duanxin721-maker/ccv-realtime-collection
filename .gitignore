@@ -1,0 +1,15 @@
+.env
+__pycache__/
+*.pyc
+node_modules/
+data/
+charts/
+monitor.log*
+server.log*
+.report_build/
+输出/
+报告_*/
+.tmp/
+*.inspect.ndjson
+*.tmp
+_tmp_*.js

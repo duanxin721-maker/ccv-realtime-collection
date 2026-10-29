@@ -1,0 +1,16 @@
+{
+  "game_name": "Wuthering Waves",
+  "game_id": 209738946,
+  "languages": [],
+  "channels": [],
+  "max_streams": 3,
+  "monitor_duration_minutes": 0,
+  "auto_charts_on_exit": false,
+  "dashboard_port": 8088,
+  "poll_interval_seconds": 30,
+  "max_stream_pages": 10,
+  "timezone": "Asia/Singapore",
+  "data_dir": "data",
+  "charts_dir": "charts",
+  "log_file": "monitor.log"
+}
