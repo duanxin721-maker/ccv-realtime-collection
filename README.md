@@ -130,7 +130,12 @@ python report.py --all
 python charts.py
 ```
 
-看板的轻量 Excel 导出使用 `openpyxl`。完整报告使用 `build_report.mjs` 和 `@oai/artifact-tool`；若该可选运行时不存在，采集、CSV/JSON 保存和看板轻量导出仍可使用。
+看板的 Excel 导出使用 `openpyxl`，下载文件包含两个工作表：
+
+- `采样数据`：逐次记录采样时间（北京时间）、可点击直播链接、主播名称、直播标题、CCV 和直播场次 ID。
+- `CCV趋势图`：按直播场次生成 Excel 原生折线图，图表直接引用采样数据，可在 Excel 中编辑标题、坐标轴、样式和数据范围。
+
+导出优先读取完整单场 CSV，不受看板状态文件仅保留最近采样点的限制。完整报告使用 `build_report.mjs` 和 `@oai/artifact-tool`；若该可选运行时不存在，采集、CSV/JSON 保存和看板 Excel 导出仍可使用。
 
 ## 主要配置
 
